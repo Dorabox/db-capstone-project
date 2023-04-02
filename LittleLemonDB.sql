@@ -18,7 +18,7 @@ USE `CourseraCapstoneProject` ;
 -- Table `CourseraCapstoneProject`.`Customer`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `CourseraCapstoneProject`.`Customer` (
-  `CustomerID` INT NOT NULL,
+  `CustomerID` INT NOT NULL AUTO_INCREMENT,
   `Name` VARCHAR(255) NOT NULL,
   PRIMARY KEY (`CustomerID`))
 ENGINE = InnoDB;
@@ -28,7 +28,7 @@ ENGINE = InnoDB;
 -- Table `CourseraCapstoneProject`.`Bookings`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `CourseraCapstoneProject`.`Bookings` (
-  `BookingID` INT NOT NULL,
+  `BookingID` INT NOT NULL AUTO_INCREMENT,
   `Date` DATE NOT NULL,
   `TableNumber` INT NOT NULL,
   `CustomerID` INT NOT NULL,
@@ -46,7 +46,7 @@ ENGINE = InnoDB;
 -- Table `CourseraCapstoneProject`.`MenuItems`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `CourseraCapstoneProject`.`MenuItems` (
-  `MenuItemsID` INT NOT NULL,
+  `MenuItemsID` INT NOT NULL AUTO_INCREMENT,
   `Starter` VARCHAR(45) NULL,
   `Main` VARCHAR(45) NULL,
   `Dessert` VARCHAR(45) NULL,
@@ -58,7 +58,7 @@ ENGINE = InnoDB;
 -- Table `CourseraCapstoneProject`.`Menu`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `CourseraCapstoneProject`.`Menu` (
-  `MenuID` INT NOT NULL,
+  `MenuID` INT NOT NULL AUTO_INCREMENT,
   `Name` VARCHAR(45) NOT NULL,
   `Cuisine` VARCHAR(45) NULL,
   `MenuItemsID` INT NOT NULL,
@@ -76,7 +76,7 @@ ENGINE = InnoDB;
 -- Table `CourseraCapstoneProject`.`Orders`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `CourseraCapstoneProject`.`Orders` (
-  `OrderID` INT NOT NULL,
+  `OrderID` INT NOT NULL AUTO_INCREMENT,
   `Date` DATE NOT NULL,
   `Quantity` INT NOT NULL,
   `TotalCost` DECIMAL(10,2) NOT NULL,
@@ -102,7 +102,7 @@ ENGINE = InnoDB;
 -- Table `CourseraCapstoneProject`.`Staff`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `CourseraCapstoneProject`.`Staff` (
-  `StaffID` INT NOT NULL,
+  `StaffID` INT NOT NULL AUTO_INCREMENT,
   `Name` VARCHAR(45) NOT NULL,
   `Salary` DECIMAL(10,2) NOT NULL,
   `Role` VARCHAR(45) NOT NULL,
@@ -114,7 +114,7 @@ ENGINE = InnoDB;
 -- Table `CourseraCapstoneProject`.`DeliveryStatus`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `CourseraCapstoneProject`.`DeliveryStatus` (
-  `DeliveryID` INT NOT NULL,
+  `DeliveryID` INT NOT NULL AUTO_INCREMENT,
   `Date` DATE NOT NULL,
   `Status` VARCHAR(45) NOT NULL,
   `OrderID` INT NOT NULL,
@@ -138,7 +138,7 @@ ENGINE = InnoDB;
 -- Table `CourseraCapstoneProject`.`ContactDetails`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `CourseraCapstoneProject`.`ContactDetails` (
-  `ContactID` INT NOT NULL,
+  `ContactID` INT NOT NULL AUTO_INCREMENT,
   `Email` VARCHAR(255) NULL,
   `PhoneNumber` VARCHAR(45) NULL,
   `Address` VARCHAR(255) NOT NULL,
