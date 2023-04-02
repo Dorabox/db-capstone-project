@@ -5,19 +5,19 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
 -- -----------------------------------------------------
--- Schema LittleLemonDB
+-- Schema CourseraCapstoneProject
 -- -----------------------------------------------------
 
 -- -----------------------------------------------------
--- Schema LittleLemonDB
+-- Schema CourseraCapstoneProject
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `LittleLemonDB` DEFAULT CHARACTER SET utf8 ;
-USE `LittleLemonDB` ;
+CREATE SCHEMA IF NOT EXISTS `CourseraCapstoneProject` DEFAULT CHARACTER SET utf8 ;
+USE `CourseraCapstoneProject` ;
 
 -- -----------------------------------------------------
--- Table `LittleLemonDB`.`Customer`
+-- Table `CourseraCapstoneProject`.`Customer`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `LittleLemonDB`.`Customer` (
+CREATE TABLE IF NOT EXISTS `CourseraCapstoneProject`.`Customer` (
   `CustomerID` INT NOT NULL,
   `Name` VARCHAR(255) NOT NULL,
   PRIMARY KEY (`CustomerID`))
@@ -25,41 +25,57 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `LittleLemonDB`.`Bookings`
+-- Table `CourseraCapstoneProject`.`Bookings`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `LittleLemonDB`.`Bookings` (
+CREATE TABLE IF NOT EXISTS `CourseraCapstoneProject`.`Bookings` (
   `BookingID` INT NOT NULL,
   `Date` DATE NOT NULL,
   `TableNumber` INT NOT NULL,
   `CustomerID` INT NOT NULL,
   PRIMARY KEY (`BookingID`),
   INDEX `CustomerID_idx` (`CustomerID` ASC) VISIBLE,
-  CONSTRAINT `BookingCustomerID`
+  CONSTRAINT `BookingsCustomerID`
     FOREIGN KEY (`CustomerID`)
-    REFERENCES `LittleLemonDB`.`Customer` (`CustomerID`)
+    REFERENCES `CourseraCapstoneProject`.`Customer` (`CustomerID`)
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `LittleLemonDB`.`Menus`
+-- Table `CourseraCapstoneProject`.`MenuItems`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `LittleLemonDB`.`Menus` (
-  `MenuID` INT NOT NULL,
-  `Name` VARCHAR(45) NOT NULL,
-  `Cuisine` VARCHAR(45) NULL,
+CREATE TABLE IF NOT EXISTS `CourseraCapstoneProject`.`MenuItems` (
+  `MenuItemsID` INT NOT NULL,
   `Starter` VARCHAR(45) NULL,
   `Main` VARCHAR(45) NULL,
   `Dessert` VARCHAR(45) NULL,
-  PRIMARY KEY (`MenuID`))
+  PRIMARY KEY (`MenuItemsID`))
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `LittleLemonDB`.`Orders`
+-- Table `CourseraCapstoneProject`.`Menu`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `LittleLemonDB`.`Orders` (
+CREATE TABLE IF NOT EXISTS `CourseraCapstoneProject`.`Menu` (
+  `MenuID` INT NOT NULL,
+  `Name` VARCHAR(45) NOT NULL,
+  `Cuisine` VARCHAR(45) NULL,
+  `MenuItemsID` INT NOT NULL,
+  PRIMARY KEY (`MenuID`),
+  INDEX `MenuItemsID_idx` (`MenuItemsID` ASC) VISIBLE,
+  CONSTRAINT `MenuItemsID`
+    FOREIGN KEY (`MenuItemsID`)
+    REFERENCES `CourseraCapstoneProject`.`MenuItems` (`MenuItemsID`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `CourseraCapstoneProject`.`Orders`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `CourseraCapstoneProject`.`Orders` (
   `OrderID` INT NOT NULL,
   `Date` DATE NOT NULL,
   `Quantity` INT NOT NULL,
@@ -71,21 +87,21 @@ CREATE TABLE IF NOT EXISTS `LittleLemonDB`.`Orders` (
   INDEX `MenuID_idx` (`MenuID` ASC) VISIBLE,
   CONSTRAINT `OrdersCustomerID`
     FOREIGN KEY (`CustomerID`)
-    REFERENCES `LittleLemonDB`.`Customer` (`CustomerID`)
+    REFERENCES `CourseraCapstoneProject`.`Customer` (`CustomerID`)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
   CONSTRAINT `MenuID`
     FOREIGN KEY (`MenuID`)
-    REFERENCES `LittleLemonDB`.`Menus` (`MenuID`)
+    REFERENCES `CourseraCapstoneProject`.`Menu` (`MenuID`)
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `LittleLemonDB`.`Staff`
+-- Table `CourseraCapstoneProject`.`Staff`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `LittleLemonDB`.`Staff` (
+CREATE TABLE IF NOT EXISTS `CourseraCapstoneProject`.`Staff` (
   `StaffID` INT NOT NULL,
   `Name` VARCHAR(45) NOT NULL,
   `Salary` DECIMAL(10,2) NOT NULL,
@@ -95,9 +111,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `LittleLemonDB`.`DeliveryStatus`
+-- Table `CourseraCapstoneProject`.`DeliveryStatus`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `LittleLemonDB`.`DeliveryStatus` (
+CREATE TABLE IF NOT EXISTS `CourseraCapstoneProject`.`DeliveryStatus` (
   `DeliveryID` INT NOT NULL,
   `Date` DATE NOT NULL,
   `Status` VARCHAR(45) NOT NULL,
@@ -107,21 +123,21 @@ CREATE TABLE IF NOT EXISTS `LittleLemonDB`.`DeliveryStatus` (
   INDEX `StaffID_idx` (`StaffID` ASC) VISIBLE,
   CONSTRAINT `OrderID`
     FOREIGN KEY (`OrderID`)
-    REFERENCES `LittleLemonDB`.`Orders` (`OrderID`)
+    REFERENCES `CourseraCapstoneProject`.`Orders` (`OrderID`)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
   CONSTRAINT `StaffID`
     FOREIGN KEY (`StaffID`)
-    REFERENCES `LittleLemonDB`.`Staff` (`StaffID`)
+    REFERENCES `CourseraCapstoneProject`.`Staff` (`StaffID`)
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `LittleLemonDB`.`ContactDetails`
+-- Table `CourseraCapstoneProject`.`ContactDetails`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `LittleLemonDB`.`ContactDetails` (
+CREATE TABLE IF NOT EXISTS `CourseraCapstoneProject`.`ContactDetails` (
   `ContactID` INT NOT NULL,
   `Email` VARCHAR(255) NULL,
   `PhoneNumber` VARCHAR(45) NULL,
@@ -133,7 +149,7 @@ CREATE TABLE IF NOT EXISTS `LittleLemonDB`.`ContactDetails` (
   INDEX `CustomerID_idx` (`CustomerID` ASC) VISIBLE,
   CONSTRAINT `ContactCustomerID`
     FOREIGN KEY (`CustomerID`)
-    REFERENCES `LittleLemonDB`.`Customer` (`CustomerID`)
+    REFERENCES `CourseraCapstoneProject`.`Customer` (`CustomerID`)
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
